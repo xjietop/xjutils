@@ -26,11 +26,13 @@ require (
 	go.etcd.io/etcd v3.3.20+incompatible
 	go.uber.org/zap v1.15.0 // indirect
 	golang.org/x/net v0.0.0-20200506145744-7e3656a0809f
+	golang.org/x/text v0.3.2
 	google.golang.org/genproto v0.0.0-20200507105951-43844f6eee31 // indirect
 	google.golang.org/grpc v1.29.1 // indirect
 	gopkg.in/flosch/pongo2.v3 v3.0.0-20141028000813-5e81b817a0c4 // indirect
 	gopkg.in/yaml.v2 v2.2.8
 )
+
 replace github.com/coreos/bbolt => go.etcd.io/bbolt v1.3.4
 
 replace google.golang.org/grpc => google.golang.org/grpc v1.26.0
