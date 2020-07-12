@@ -2,10 +2,11 @@ package xjutils
 
 import (
 	"encoding/json"
-	"io/ioutil"
-
-	"gitee.com/xjieinfo/xjutils/models"
+	"gitee.com/xjieinfo/xjutils/entity"
 	"gopkg.in/yaml.v2"
+	"io/ioutil"
+	"log"
+	"os"
 )
 
 func GetAppConfig(profile string) (error, AppConfig) {
@@ -40,8 +41,12 @@ func GetNacAppConfig(AppConfig AppConfig, profile string) (error, NacAppConfig) 
 	url := "http://" + AppConfig.Register.Url + ":" + AppConfig.Register.Port + "/config/get?DataId=" + filename
 	data := HttpGetStr(url)
 	t := NacAppConfig{}
-	var r models.R
+	var r entity.R
 	json.Unmarshal([]byte(data), &r)
+	if r.Data == nil {
+		log.Println("nac配置文件读取失败:", url)
+		os.Exit(1)
+	}
 	d := []byte(r.Data.(string))
 	//把yaml形式的字符串解析成struct类型
 	err := yaml.Unmarshal(d, &t)
