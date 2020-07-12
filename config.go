@@ -9,7 +9,7 @@ import (
 	"os"
 )
 
-func GetAppConfig(profile string) (error, AppConfig) {
+func GetAppConfig(profile string) AppConfig {
 	filename := "./conf/conf.yml"
 	if profile != "" {
 		filename = "./conf/conf-" + profile + ".yml"
@@ -18,7 +18,11 @@ func GetAppConfig(profile string) (error, AppConfig) {
 	t := AppConfig{}
 	//把yaml形式的字符串解析成struct类型
 	err := yaml.Unmarshal(data, &t)
-	return err, t
+	if err != nil {
+		log.Println("配置文件有误：", err)
+		os.Exit(1)
+	}
+	return t
 }
 
 type AppConfig struct {
@@ -33,24 +37,41 @@ type AppConfig struct {
 	}
 }
 
-func GetNacAppConfig(AppConfig AppConfig, profile string) (error, NacAppConfig) {
+func GetNacAppConfig(AppConfig AppConfig, profile string) NacAppConfig {
+	log.Println("开始读取Nac配置信息...")
+	t := NacAppConfig{}
 	filename := AppConfig.App.Name + ".yml"
 	if profile != "" {
 		filename = AppConfig.App.Name + "-" + profile + ".yml"
 	}
 	url := "http://" + AppConfig.Register.Url + ":" + AppConfig.Register.Port + "/config/get?DataId=" + filename
-	data := HttpGetStr(url)
-	t := NacAppConfig{}
+	data, err := HttpGetStr(url)
+	if err != nil {
+		log.Println("读取Nac配置信息出错了")
+		log.Println(err)
+		os.Exit(1)
+	}
 	var r entity.R
-	json.Unmarshal([]byte(data), &r)
+	err = json.Unmarshal([]byte(data), &r)
+	if err != nil {
+		log.Println("读取Nac配置信息出错了")
+		log.Println(err)
+		os.Exit(1)
+	}
 	if r.Data == nil {
-		log.Println("nac配置文件读取失败:", url)
+		log.Println("Nac配置信息为空")
 		os.Exit(1)
 	}
 	d := []byte(r.Data.(string))
 	//把yaml形式的字符串解析成struct类型
-	err := yaml.Unmarshal(d, &t)
-	return err, t
+	err = yaml.Unmarshal(d, &t)
+	if err != nil {
+		log.Println("读取Nac配置信息出错了")
+		log.Println(err)
+		os.Exit(1)
+	}
+	log.Println("读取Nac配置信息...OK")
+	return t
 }
 
 type NacAppConfig struct {
@@ -65,5 +86,10 @@ type NacAppConfig struct {
 		Username   string
 		Password   string
 		Database   string
+	}
+	Redis struct {
+		Addr     string
+		Password string
+		DB       int
 	}
 }

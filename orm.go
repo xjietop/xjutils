@@ -3,20 +3,22 @@ package xjutils
 import (
 	"encoding/json"
 	"fmt"
-	"log"
-	"os"
-
+	"github.com/go-redis/redis"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
+	"log"
+	"os"
 	//"github.com/go-xorm/xorm"
 	"github.com/xormplus/xorm"
 )
 
 var (
-	Db *xorm.Engine
+	Db      *xorm.Engine
+	Gorm    *gorm.DB
+	Redisdb *redis.Client
 )
 
-func OrmInit(Conf NacAppConfig) *xorm.Engine {
+func XormInit(Conf NacAppConfig) *xorm.Engine {
 	dataSourceName := Conf.Datasource.Username + ":" + Conf.Datasource.Password + "@tcp(" + Conf.Datasource.Url + ":" + Conf.Datasource.Port + ")/" + Conf.Datasource.Database + "?charset=utf8&parseTime=True&loc=Asia%2fShanghai"
 	Db, err := xorm.NewEngine(Conf.Datasource.Drivername, dataSourceName)
 	if err = Db.Ping(); err != nil {
@@ -24,13 +26,6 @@ func OrmInit(Conf NacAppConfig) *xorm.Engine {
 		os.Exit(1)
 	}
 	Db.ShowSQL(true)
-	//lst := make([]map[string]string,0)
-	//sql := "select * from m_user limit ?,?"
-	//err = Db.SQL(sql,0,10).Find(&lst)
-	//if err!=nil{
-	//	fmt.Println(err)
-	//}
-	//fmt.Println(lst)
 	return Db
 }
 func GormInit(Conf NacAppConfig) *gorm.DB {
@@ -57,13 +52,13 @@ func Init() {
 	//regurl := "http://"+register_url+":"+register_port+"/item/"+appname
 	//HttpGetStr(regurl)
 	confurl := "http://" + register_url + ":" + register_port + "/item/config"
-	confstr := HttpGetStr(confurl)
+	confstr, _ := HttpGetStr(confurl)
 	var confitem []Srv
 	json.Unmarshal([]byte(confstr), &confitem)
 	url0 := confitem[0].Url
 	surl := "http://" + url0 + "/config/dbf/" + dbfname
 	println(surl)
-	dataSourceName := HttpGetStr(surl)
+	dataSourceName, _ := HttpGetStr(surl)
 	if dataSourceName == "" {
 		fmt.Println(surl + "获取配置失败")
 		os.Exit(1)
@@ -80,4 +75,32 @@ type Srv struct {
 	Name      string
 	Url       string
 	StartTime string
+}
+
+func Count(db *gorm.DB, sql string) (total int64) {
+	count := struct{ Count int64 }{}
+	err := db.Raw(sql).First(&count).Error
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	total = count.Count
+	return
+}
+
+func RedisInit(Conf NacAppConfig) *redis.Client {
+	Redisdb = redis.NewClient(&redis.Options{
+		Addr:     Conf.Redis.Addr,     // use default Addr
+		Password: Conf.Redis.Password, // no password set
+		DB:       Conf.Redis.DB,       // use default DB
+	})
+	//心跳
+	pong, err := Redisdb.Ping().Result()
+	if err != nil {
+		log.Println("连接redis出错了")
+		log.Println(err)
+		os.Exit(0)
+	}
+	log.Println("连接redis...", pong, err) // Output: PONG <nil>
+	return Redisdb
 }

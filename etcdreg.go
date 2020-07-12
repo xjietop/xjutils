@@ -3,9 +3,10 @@ package xjutils
 import (
 	"context"
 	"fmt"
-	"time"
-
 	"github.com/coreos/etcd/clientv3"
+	"log"
+	"os"
+	"time"
 )
 
 //创建租约注册服务
@@ -18,7 +19,9 @@ type ServiceReg struct {
 	key           string
 }
 
-func NewServiceReg(addr []string, timeNum int64) (*ServiceReg, error) {
+func NewServiceReg(addr []string, timeNum int64) *ServiceReg {
+	log.Println("开始连接etcd...")
+	var err error
 	conf := clientv3.Config{
 		Endpoints:   addr,
 		DialTimeout: 5 * time.Second,
@@ -31,7 +34,9 @@ func NewServiceReg(addr []string, timeNum int64) (*ServiceReg, error) {
 	if clientTem, err := clientv3.New(conf); err == nil {
 		client = clientTem
 	} else {
-		return nil, err
+		log.Println("连接etcd出错了")
+		log.Println(err)
+		os.Exit(1)
 	}
 
 	ser := &ServiceReg{
@@ -39,10 +44,18 @@ func NewServiceReg(addr []string, timeNum int64) (*ServiceReg, error) {
 	}
 
 	if err := ser.setLease(timeNum); err != nil {
-		return nil, err
+		log.Println("连接etcd出错了")
+		log.Println(err)
+		os.Exit(1)
 	}
 	go ser.ListenLeaseRespChan()
-	return ser, nil
+	if err != nil {
+		log.Println("连接etcd出错了")
+		log.Println(err)
+		os.Exit(1)
+	}
+	log.Println("连接etcd...OK")
+	return ser
 }
 
 //设置租约

@@ -28,7 +28,7 @@ func Register() {
 	registerurl := "http://" + register_url + ":" + register_port + "/put/" + local_appname + "/" + local_url + ":" + local_port
 	HttpGetStr(registerurl)
 
-	ser, _ := NewServiceReg([]string{"127.0.0.1:2379"}, 5)
+	ser := NewServiceReg([]string{"127.0.0.1:2379"}, 5)
 	ser.PutService(local_appname+"/"+local_url+":"+local_port, "")
 }
 
