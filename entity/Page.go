@@ -8,6 +8,15 @@ type Page struct {
 	Records interface{} `json:"records"`  //结果集
 }
 
+func (p *Page) SetTotal(total int64) {
+	p.Total = total
+	if total%int64(p.Size) == 0 {
+		p.Pages = total / int64(p.Size)
+	} else {
+		p.Pages = total/int64(p.Size) + 1
+	}
+}
+
 func (p *Page) SetPageSize(current, size int, total int64) {
 	if current < 1 {
 		current = 1
