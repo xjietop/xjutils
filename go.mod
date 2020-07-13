@@ -1,4 +1,4 @@
-module gitee.com/xjieinfo/xjutils
+module gitee.com/xjietop/xjutils
 
 go 1.14
 
@@ -39,4 +39,4 @@ replace github.com/coreos/bbolt => go.etcd.io/bbolt v1.3.4
 
 replace google.golang.org/grpc => google.golang.org/grpc v1.26.0
 
-// replace gitee.com/xjieinfo/xjutils => d:/golang/src/gitee.com/xjieinfo/xjutils
+// replace gitee.com/xjietop/xjutils => d:/golang/xjietop/xjutils
