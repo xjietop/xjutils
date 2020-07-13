@@ -1,6 +1,7 @@
 # xjnac
 
 #### 开发日志
+v0.0.9 2020-07-13 增加InterfaceToString  
 v0.0.8 2020-07-13 Page增加SetTotal方法  
 v0.0.7 2020-07-13 增加了ContainsString,ContainsInt
 v0.0.6 2020-07-13 models中名称由gitee.com/xjietop/xjutils改为github.com/xjietop/xjutils  
