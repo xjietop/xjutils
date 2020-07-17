@@ -1,6 +1,7 @@
 # xjnac
 
 #### 开发日志
+v0.1.0 2020-07-17 增加RpcxCall函数调用rpcx  
 v0.0.9 2020-07-13 增加InterfaceToString  
 v0.0.8 2020-07-13 Page增加SetTotal方法  
 v0.0.7 2020-07-13 增加了ContainsString,ContainsInt

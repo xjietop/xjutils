@@ -11,7 +11,6 @@ require (
 	github.com/astaxie/beego v1.12.2
 	github.com/bndr/gotabulate v1.1.2 // indirect
 	github.com/clbanning/mxj v1.8.4 // indirect
-	github.com/coreos/bbolt v0.0.0-00010101000000-000000000000 // indirect
 	github.com/coreos/etcd v3.3.20+incompatible
 	github.com/coreos/go-semver v0.3.0 // indirect
 	github.com/coreos/go-systemd v0.0.0-20191104093116-d3cd4ed1dbcf // indirect
@@ -34,6 +33,7 @@ require (
 	github.com/jinzhu/gorm v1.9.14
 	github.com/jonboulle/clockwork v0.2.0 // indirect
 	github.com/prometheus/client_golang v1.7.1 // indirect
+	github.com/smallnest/rpcx v0.0.0-20200714114247-35b07de0def7
 	github.com/smartystreets/goconvey v1.6.4
 	github.com/soheilhy/cmux v0.1.4 // indirect
 	github.com/syndtr/goleveldb v1.0.0 // indirect
