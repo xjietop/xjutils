@@ -3,6 +3,7 @@ package xjutils
 import (
 	"bytes"
 	"encoding/json"
+	"github.com/astaxie/beego/context"
 	"log"
 	"regexp"
 	"strconv"
@@ -10,6 +11,11 @@ import (
 	"unicode"
 )
 
+func BeegoServeJSON(ctx *context.Context,data interface{}){
+	content,_ := json.Marshal(JsonCamelCase{data})
+	ctx.Output.Header("Content-Type", "application/json; charset=utf-8")
+	ctx.Output.Body(content)
+}
 /*************************************** 下划线json ***************************************/
 type JsonSnakeCase struct {
 	Value interface{}

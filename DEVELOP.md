@@ -1,6 +1,7 @@
 # xjnac
 
 #### 开发日志
+v0.1.3 2020-07-21 增加BeegoServeJSON  
 v0.1.2 2020-07-19 增加es时间戳和json的转换  
 v0.1.1 2020-07-17 增加RpcxCallStr,RpcxCallByte函数调用rpcx  
 v0.1.0 2020-07-17 增加RpcxCall函数调用rpcx  
