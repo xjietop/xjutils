@@ -1,6 +1,7 @@
 # xjnac
 
 #### 开发日志
+v0.2.0 2020-08-09 modify tag
 v0.1.9 2020-08-09 modify tag  
 v0.1.8 2020-08-09 modify tag  
 v0.1.7 2020-08-09 modify tag  

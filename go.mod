@@ -1,4 +1,4 @@
-module gitee.com/xjietop/xjutils
+module github.com/xjietop/xjutils
 
 go 1.14
 

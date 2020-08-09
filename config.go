@@ -2,7 +2,7 @@ package xjutils
 
 import (
 	"encoding/json"
-	"gitee.com/xjietop/xjutils/entity"
+	"github.com/xjietop/xjutils/entity"
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"log"
