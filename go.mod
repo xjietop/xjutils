@@ -1,4 +1,4 @@
-module github.com/xjietop/xjutils
+module gitee.com/xjietop/xjutils
 
 go 1.14
 
@@ -40,6 +40,7 @@ require (
 	github.com/tealeg/xlsx v1.0.5 // indirect
 	github.com/tmc/grpc-websocket-proxy v0.0.0-20200427203606-3cfed13b9966 // indirect
 	github.com/xiang90/probing v0.0.0-20190116061207-43a291ad63a2 // indirect
+	github.com/xjietop/xjutils v0.1.3 // indirect
 	github.com/xormplus/builder v0.0.0-20200331055651-240ff40009be // indirect
 	github.com/xormplus/xorm v0.0.0-20200430045551-96878f084315
 	go.etcd.io/bbolt v1.3.5 // indirect

@@ -37,7 +37,7 @@ type AppConfig struct {
 	}
 }
 
-func GetNacAppConfig(AppConfig AppConfig, profile string) NacAppConfig {
+func GetNacAppConfig(AppConfig AppConfig, profile string) (string, NacAppConfig) {
 	log.Println("开始读取Nac配置信息...")
 	t := NacAppConfig{}
 	filename := AppConfig.App.Name + ".yml"
@@ -71,7 +71,7 @@ func GetNacAppConfig(AppConfig AppConfig, profile string) NacAppConfig {
 		os.Exit(1)
 	}
 	log.Println("读取Nac配置信息...OK")
-	return t
+	return data, t
 }
 
 type NacAppConfig struct {

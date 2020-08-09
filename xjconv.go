@@ -27,6 +27,20 @@ func StringToIntArray(s string) ([]int, error) {
 	return ints, nil
 }
 
+func StringToInt64Array(s string) ([]int64, error) {
+	var ints []int64
+	ss := strings.Split(s, ",")
+	for _, s1 := range ss {
+		i1, err := strconv.ParseInt(s1, 10, 64)
+		if err == nil {
+			ints = append(ints, i1)
+		} else {
+			return ints, err
+		}
+	}
+	return ints, nil
+}
+
 func IntArrayToString(ints []int) string {
 	s := ""
 	for _, i1 := range ints {
@@ -38,8 +52,8 @@ func IntArrayToString(ints []int) string {
 	return s
 }
 
-func InterfaceToString(val interface{})(string){
-	if val != nil{
+func InterfaceToString(val interface{}) string {
+	if val != nil {
 		switch val.(type) {
 		case bool:
 			return strconv.FormatBool(val.(bool))
