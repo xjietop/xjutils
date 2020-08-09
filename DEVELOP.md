@@ -1,6 +1,7 @@
 # xjnac
 
 #### 开发日志
+v0.1.7 2020-08-09 modify tag  
 v2020.016 2020-08-09 modify tag  
 v2020.015 2020-08-09 models中名称由gitee.com/xjietop/xjutils改为github.com/xjietop/xjutils  
 v2020.014 2020-08-09 models中名称由github.com/xjietop/xjutils改为gitee.com/xjietop/xjutils 
